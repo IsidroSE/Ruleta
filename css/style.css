@@ -1,0 +1,161 @@
+* {
+    margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    background-image: url('../img/fondo.jpg');
+	background-size: cover;
+    font-family: Aclonica;
+}
+
+main {
+    width: 70%;
+    padding-left: 1vw;
+}
+
+aside {
+    margin: 0 auto;
+    width: 20%;
+    background-color: white;
+    opacity: 0.85;
+}
+
+table {
+    /*margin: 0 auto;*/
+    margin-top: 2.5%;
+    width: 100%;
+    text-align: center;
+}
+
+.apuestas_container {
+    display: inline;
+}
+
+.celda_ruleta {
+    background-color: green;
+    margin: 15%;
+    font-size: 2.5vw;
+    font-weight: bold;
+    color: white;
+}
+
+.celda_ruleta-disabled {
+	background-color: #aaa;
+    margin: 15%;
+    font-size: 2.5vw;
+    font-weight: bold;
+    color: black;
+}
+
+.celda_ruleta:hover {
+    background-color: yellow;
+}
+
+.rojo {
+    color: red;
+}
+
+.negro {
+    color: black;
+}
+
+#apuestas_jugador {
+    margin: 1vw auto;
+    width: 90%;
+    text-align: center;
+}
+
+#apuestas_jugador span img {
+    width: 2.5vw;
+}
+
+#datos_jugador {
+    padding-top: 10vw;
+    font-size: 1.5vw;
+    text-align: left;
+}
+
+#controles_juego {
+    padding-top: 5vw;
+    text-align: center;
+}
+
+#marcador_ruleta {
+    width: 40%;
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: 3vw;
+    box-shadow: 6px 6px 5px 0 rgba(0,0,0,0.4);
+}
+
+.myButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	box-shadow:inset 0px 1px 0px 0px #fff6af;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
+	background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+	background-color:#ffec64;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+    box-shadow: 6px 6px 5px 0 rgba(0,0,0,0.4);
+}
+
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
+	background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
+	background-color:#ffab23;
+}
+
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.boton-disabled {
+	-moz-box-shadow:inset 1px 1px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 1px 1px 0px 0px #ffffff;
+    box-shadow:inset 1px 1px 0px 0px #ffffff;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #bbb), color-stop(1, #aaa) );
+    background:-moz-linear-gradient( center top, #bbb 5%, #aaa 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+	background-color:#aaa;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	font-family:Arial Black;
+    color:#333333;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 3px 0px #ccc;
+    box-shadow: 6px 6px 5px 0 rgba(0,0,0,0.4);
+}

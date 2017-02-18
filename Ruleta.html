@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ruleta</title>
+		<meta charset="UTF-8" />
+        <link href="https://fonts.googleapis.com/css?family=Aclonica" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+	</head>
+	<body>
+		<main>
+            <table>
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="3" class="celda_ruleta" onclick="apostar(0)">0</td>
+                </tr>
+                <tr>
+                    <td rowspan="4" colspan="3" class="celda_ruleta" onclick="apostar(100)">PASA 19 A 36</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(1)">1</td>
+                    <td class="negro celda_ruleta" onclick="apostar(2)">2</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(3)">3</td>
+                    <td rowspan="4" colspan="3" class="celda_ruleta" onclick="apostar(101)">FALTA 1 A 18</td>
+                </tr>
+                <tr>
+                    <td class="negro celda_ruleta" onclick="apostar(4)">4</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(5)">5</td>
+                    <td class="negro celda_ruleta" onclick="apostar(6)">6</td>
+                </tr>
+                <tr>
+                    <td class="rojo celda_ruleta" onclick="apostar(7)">7</td>
+                    <td class="negro celda_ruleta" onclick="apostar(8)">8</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(9)">9</td>
+                </tr>
+                <tr>
+                    <td class="negro celda_ruleta" onclick="apostar(10)">10</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(11)">11</td>
+                    <td class="negro celda_ruleta" onclick="apostar(12)">12</td>
+                </tr>
+                <tr>
+                    <td rowspan="4" colspan="3" class="celda_ruleta" onclick="apostar(102)">PAR</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(13)">13</td>
+                    <td class="negro celda_ruleta" onclick="apostar(14)">14</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(15)">15</td>
+                    <td rowspan="4" colspan="3" class="celda_ruleta" onclick="apostar(103)">IMPAR</td>
+                </tr>
+                <tr>
+                    <td class="negro celda_ruleta" onclick="apostar(16)">16</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(17)">17</td>
+                    <td class="negro celda_ruleta" onclick="apostar(18)">18</td>
+                </tr>
+                <tr>
+                    <td class="rojo celda_ruleta" onclick="apostar(19)">19</td>
+                    <td class="negro celda_ruleta" onclick="apostar(20)">20</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(21)">21</td>
+                </tr>
+                <tr>
+                    <td class="negro celda_ruleta" onclick="apostar(22)">22</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(23)">23</td>
+                    <td class="negro celda_ruleta" onclick="apostar(24)">24</td>
+                </tr>
+                <tr>
+                    <td rowspan="4" colspan="3" class="celda_ruleta negro" onclick="apostar(104)">NEGRO</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(25)">25</td>
+                    <td class="negro celda_ruleta" onclick="apostar(26)">26</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(27)">27</td>
+                    <td rowspan="4" colspan="3" class="celda_ruleta rojo" onclick="apostar(105)">ROJO</td>
+                </tr>
+                <tr>
+                    <td class="negro celda_ruleta" onclick="apostar(28)">28</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(29)">29</td>
+                    <td class="negro celda_ruleta" onclick="apostar(30)">30</td>
+                </tr>
+                <tr>
+                    <td class="rojo celda_ruleta" onclick="apostar(31)">31</td>
+                    <td class="negro celda_ruleta" onclick="apostar(32)">32</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(33)">33</td>
+                </tr>
+                <tr>
+                    <td class="negro celda_ruleta" onclick="apostar(34)">34</td>
+                    <td class="rojo celda_ruleta" onclick="apostar(35)">35</td>
+                    <td class="negro celda_ruleta" onclick="apostar(36)">36</td>
+                </tr>
+                <tr>
+                    <td class="celda_ruleta" onclick="apostar(106)">P12</td>
+                    <td class="celda_ruleta" onclick="apostar(107)">M12</td>
+                    <td class="celda_ruleta" onclick="apostar(108)">D12</td>
+
+                    <td colspan="3"></td>
+
+                    <td class="celda_ruleta" onclick="apostar(106)">P12</td>
+                    <td class="celda_ruleta" onclick="apostar(107)">M12</td>
+                    <td class="celda_ruleta" onclick="apostar(108)">D12</td>
+                </tr>
+            </table>
+		</main>
+        <aside>
+            <div id="apuestas_jugador">
+                <p>
+                    Ficha a apostar:&nbsp;&nbsp;
+                     <select id="ficha" name="ficha" onchange="cambiar_ficha(value);">
+                        <option value="1" selected="selected">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                    </select>
+                    <span> <img src="img/1.png" id="imagen_ficha" /> </span>
+                </p>
+                <div id="controles_juego">
+                    <a href="#" class="myButton">Girar la ruleta</a> &nbsp;&nbsp;
+                    <span id="marcador_ruleta">30</span> <br> <br> <br> <br>
+                    <a href="#" class="boton-disabled">Borrar apuesta</a> <br> <br> <br>
+                    <a href="#" class="boton-disabled">Nueva partida</a>                   
+                </div>
+                <div id="datos_jugador">
+                    <p>Crédito: <span id="credito_jugador">5000€</span> </p> <br>
+                    <p>Apuesta total: <span id="apuesta_total_jugador">0€</span> </p> <br>
+                    <p>Ganancias: <span id="ganancia_jugador">0€</span> </p>
+                </div>
+            </div>
+        </aside>
+        <script src="js/app.js"></script>
+	</body>
+</html>
