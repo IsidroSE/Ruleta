@@ -50,6 +50,10 @@ table {
     background-color: yellow;
 }
 
+.celda_ruleta:active {
+    background-color: orange;
+}
+
 .rojo {
     color: red;
 }
@@ -102,6 +106,32 @@ table {
 
 .fondo_verde {
 	background-color: green;
+}
+
+#premios_ruleta {
+	margin-top: 2vw;
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+}
+
+.premios_ruleta_ganar {
+	background-color: #58ACFA;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+	-moz-box-shadow:    4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+	box-shadow:         4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+}
+
+.premios_ruleta_perder {
+	background-color: red;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+	-moz-box-shadow:    4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+	box-shadow:         4px 5px 5px 0px rgba(50, 50, 50, 0.32);
 }
 
 #apuestas {

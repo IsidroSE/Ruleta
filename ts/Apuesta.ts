@@ -28,11 +28,13 @@ class Apuesta {
     private _tipo_apuesta: string;
     private _categoria_apuesta: string;
     private _clase_de_apuesta: string;
+    private _resultado_apuesta: string;
 
     constructor(numero: number, cantidad_apostada: number) {
         this._numero = numero;
         this._cantidad_apostada = cantidad_apostada;
         this.get_categoria_apuesta();
+        this._resultado_apuesta = "";
     }
 
     /** Método que obtiene y guarda la categoría, tipo y clase CSS de la apuesta según la celda que se haya pulsado
@@ -102,6 +104,14 @@ class Apuesta {
         this._tipo_apuesta = tipo_apuesta;
     }
 
+    get resultado_apuesta(): string {
+        return this._resultado_apuesta;
+    }
+
+    set resultado_apuesta(resultado_apuesta: string) {
+        this._resultado_apuesta = resultado_apuesta;
+    }
+
     //Muestra esta apuesta en pantalla
     public mostrar_apuesta() {
 
@@ -117,6 +127,7 @@ class Apuesta {
                 + "<div class='descripcion_apuesta'>"
                     + "<p>Apuesta por: " + this._tipo_apuesta + "</p>"
                     + "<p>Saldo apostado: " + this._cantidad_apostada + "€</p>"
+                    + "<p> " + this._resultado_apuesta + " </p>"
                 + "</div>"
             + "</div>";
 

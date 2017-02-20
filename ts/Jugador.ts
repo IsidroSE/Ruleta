@@ -20,7 +20,7 @@ class Jugador {
     }
 
     get credito(): number {
-        return this.credito;
+        return this._credito;
     }
 
     set credito(credito: number) {
@@ -55,7 +55,7 @@ class Jugador {
     public mostrar_datos_jugador() {
         credito_jugador.innerHTML = this._credito + "€";
         apuesta_total_jugador.innerHTML = this._apuesta_total + "€";
-        ganancia_jugador.innerHTML = this._ganancia + "€";
+        ganancia_jugador.innerHTML = this._ganancia > 0 ? this._ganancia + "€" : "0€";
     }
 
     //Muestra la cantidad total apostada por el jugador
@@ -100,6 +100,7 @@ class Jugador {
 
     }
 
+    //Borra todas las apuestas del vector de apuestas y de la pantalla, también pone a 0 el marcador de la apuesta total
     public borrar_apuestas() {
         this._apuestas = []
         apuestas_mostradas.innerHTML = "";
