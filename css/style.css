@@ -12,13 +12,13 @@ body {
 }
 
 main {
-    width: 70%;
+    width: 60%;
     padding-left: 1vw;
 }
 
 aside {
     margin: 0 auto;
-    width: 20%;
+    width: 30%;
     background-color: white;
     opacity: 0.85;
 }
@@ -28,10 +28,6 @@ table {
     margin-top: 2.5%;
     width: 100%;
     text-align: center;
-}
-
-.apuestas_container {
-    display: inline;
 }
 
 .celda_ruleta {
@@ -62,34 +58,100 @@ table {
     color: black;
 }
 
-#apuestas_jugador {
+#panel_jugador {
     margin: 1vw auto;
     width: 90%;
     text-align: center;
 }
 
 #apuestas_jugador span img {
+	padding-top: 1vw;
     width: 2.5vw;
 }
 
 #datos_jugador {
-    padding-top: 10vw;
+    padding-top: 1vw;
     font-size: 1.5vw;
     text-align: left;
 }
 
 #controles_juego {
-    padding-top: 5vw;
+    padding-top: 2vw;
     text-align: center;
+}
+
+#ruleta {
+	padding-bottom: 1.5vw;
 }
 
 #marcador_ruleta {
     width: 40%;
     text-align: center;
-    background-color: black;
     color: white;
     font-size: 3vw;
     box-shadow: 6px 6px 5px 0 rgba(0,0,0,0.4);
+}
+
+.fondo_rojo {
+	background-color: red;
+}
+
+.fondo_negro {
+	background-color: black;
+}
+
+.fondo_verde {
+	background-color: green;
+}
+
+#apuestas {
+	display: block;
+	border: 2px solid #BDBDBD;
+	margin-top: 1vw;
+}
+
+.apuesta {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 2vw;
+	margin-bottom: 2vw;
+	border: 1px solid #E6E6E6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+	-moz-box-shadow:    4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+	box-shadow:         4px 5px 5px 0px rgba(50, 50, 50, 0.32);
+}
+
+.cabecera_apuesta {
+	width: 100%;
+	color: white;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
+}
+
+.suerte_sencilla {
+	background-color: #58ACFA;
+}
+
+.docenas {
+	background-color: #FF8000;
+}
+
+.pleno {
+	background-color: red;
+}
+
+.descripcion_apuesta {
+	margin-top: 0.5vw;
+	margin-bottom: 0.5vw;
+	padding-left: 4%;
+	padding-right: 4%;
+	text-align: left;
+	font-size: 1.4vw;
+	font-family: serif;
 }
 
 .myButton {

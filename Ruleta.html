@@ -93,8 +93,26 @@
             </table>
 		</main>
         <aside>
-            <div id="apuestas_jugador">
-                <p>
+            <div id="panel_jugador">
+
+                <div id="datos_jugador">
+                    <table>
+                        <tr>
+                            <td>Crédito:</td>
+                            <td><span id="credito_jugador"> </span></td>
+                        </tr>
+                        <tr>
+                            <td>Apuesta total:</td>
+                            <td><span id="apuesta_total_jugador"> </span></td>
+                        </tr>
+                        <tr>
+                            <td>Ganancias:</td>
+                            <td><span id="ganancia_jugador"> </span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="apuestas_jugador">
                     Ficha a apostar:&nbsp;&nbsp;
                      <select id="ficha" name="ficha" onchange="cambiar_ficha(value);">
                         <option value="1" selected="selected">1</option>
@@ -107,18 +125,35 @@
                         <option value="1000">1000</option>
                     </select>
                     <span> <img src="img/1.png" id="imagen_ficha" /> </span>
-                </p>
+                </div>
+
                 <div id="controles_juego">
-                    <a href="#" class="myButton">Girar la ruleta</a> &nbsp;&nbsp;
-                    <span id="marcador_ruleta">30</span> <br> <br> <br> <br>
-                    <a href="#" class="boton-disabled">Borrar apuesta</a> <br> <br> <br>
-                    <a href="#" class="boton-disabled">Nueva partida</a>                   
+                    <div id="ruleta">
+                        <a id="btn_girar_ruleta" href="#" class="boton-disabled" onclick="girar_ruleta()">Girar la ruleta</a> &nbsp;&nbsp;
+                        <span id="marcador_ruleta" class="fondo_verde">00</span>
+                    </div>
+                    <a id="btn_borrar_apuestas" href="#" class="boton-disabled" onclick="borrar_apuestas()">Borrar apuestas</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a id="btn_nueva_partida" href="#" class="boton-disabled" onclick="nueva_partida()">Nueva partida</a>
                 </div>
-                <div id="datos_jugador">
-                    <p>Crédito: <span id="credito_jugador">5000€</span> </p> <br>
-                    <p>Apuesta total: <span id="apuesta_total_jugador">0€</span> </p> <br>
-                    <p>Ganancias: <span id="ganancia_jugador">0€</span> </p>
+
+                <div id="apuestas">
+                    <h1>Apuestas:</h1>
+                    <hr>
+                    <div id="apuestas_mostradas">
+                        <!--
+                        <div class='apuesta'>
+                            <div class='cabecera_apuesta suerte_sencilla'>
+                                <h3 class='tipo_apuesta'>Suerte Sencilla</h3>
+                            </div>
+                            <div class='descripcion_apuesta'>
+                                <p>Apostado por: Rojo</p>
+                                <p>Saldo apostado: 2€</p>
+                            </div>
+                        </div>
+                        -->
+                    </div>
                 </div>
+
             </div>
         </aside>
         <script src="js/app.js"></script>
