@@ -2,9 +2,9 @@
 enum GameState {
     //Apostando
     BETTING,
-    //Girando la ruleta
+    //Girando la ruleta, calculando y repartiendo las recompensas
     SPINNING,
-    //Cuando la ruleta ha acabado de girar, aquí se calcularán las recompensas
+    //Al acabar de girar la ruleta, si el jugador tiene suficiente dinero para seguir apostando
     FINISHED,
     //Fin del juego: cuando el jugador se queda sin dinero
     GAME_ENDED
@@ -49,11 +49,6 @@ let apuestas_mostradas: HTMLElement = document.getElementById("apuestas_mostrada
 const negro: string = "negro";
 const rojo: string = "rojo";
 const verde: string = "verde";
-
-//Números que contiene cada columna
-const P12: number[] = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34];
-const M12: number[] = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35];
-const D12: number[] = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36];
 
 class Ruleta {
 
@@ -101,7 +96,7 @@ class Ruleta {
         else if (color == negro) marcador_ruleta.className = fondo_negro;
         else marcador_ruleta.className = fondo_rojo;
 
-        if (iteraciones > 0)
+        if (iteraciones >= 0)
             setTimeout(() => this.girar(--iteraciones), 200);
         else
             this.revisar_apuestas(alea);
@@ -109,8 +104,6 @@ class Ruleta {
 
     //Dado el número premiado, comprueba si el jugador ha ganado algún premio
     public revisar_apuestas(numero_premiado: number) {
-
-        this._gameState = GameState.FINISHED;
 
         let premio: string = "";
         let total_ganado = 0;
@@ -150,15 +143,15 @@ class Ruleta {
                     break;
                     // ---------------------------------------------------<----- cambiar esto!!!
                     case tipo_apuestas.P12:
-                        if (P12.indexOf(numero_premiado) > -1)
+                        if (numero_premiado >= 1 && numero_premiado <= 12)
                             premio = DOCENA;
                     break;
                     case tipo_apuestas.M12:
-                        if (M12.indexOf(numero_premiado) > -1)
+                        if (numero_premiado >= 13 && numero_premiado <= 24)
                             premio = DOCENA;
                     break;
                     case tipo_apuestas.D12:
-                        if (D12.indexOf(numero_premiado) > -1)
+                        if (numero_premiado >= 25 && numero_premiado <= 36)
                             premio = DOCENA;
                     break;
                 }
@@ -196,8 +189,11 @@ class Ruleta {
             cantidad_ganada = apuesta.cantidad_apostada * 35;
         }
 
+        cantidad_ganada += apuesta.cantidad_apostada;
+
         this._jugador.apuesta_total -= apuesta.cantidad_apostada;
         this._jugador.ganancia += cantidad_ganada;
+        apuesta.resultado_apuesta = "Has ganado: " + cantidad_ganada + "€";
         return cantidad_ganada;
 
     }
@@ -207,8 +203,9 @@ class Ruleta {
 
         let cantidad_perdida: number = apuesta.cantidad_apostada;
 
-        this._jugador.apuesta_total -= apuesta.cantidad_apostada;
+        this._jugador.apuesta_total -= cantidad_perdida;
         this._jugador.ganancia -= cantidad_perdida;
+        apuesta.resultado_apuesta = "Has perdido: " + cantidad_perdida + "€";
         return cantidad_perdida;
 
     }
@@ -225,18 +222,27 @@ class Ruleta {
             clase_fondo = premios_ruleta_ganar;
         }
         else {
+            //Nota: Math.abs() pasa el número negativo a positivo
             mensaje_ruleta = "HAS PERDIDO " + (Math.abs(total_ganado)) + "€."
             clase_fondo = premios_ruleta_perder;
         }
 
+        //Mostrar resultados de las apuestas
         this._jugador.mostrar_datos_jugador();
         premios_ruleta.innerHTML = mensaje_ruleta;
         premios_ruleta.className = clase_fondo;
+        this._jugador.mostrar_apuestas();
 
-        /*Cosas por hacer:
-            1. Intentar que debajo de cada apuesta muestre lo que has ganado o perdido. (creo que el metodo de
-            mostrar está hecho, intentar ahora cambiar la variable this._resultado_apuesta en los metodos de arriba).
-            2. Prevenir derrota del jugador y activar/desactivar los botones pertinentes.*/
+
+        btn_girar_ruleta.className = boton_desactivado;
+        if (this._jugador.credito > 0) {
+            this._gameState = GameState.FINISHED;
+            btn_borrar_apuestas.className = boton_activado;
+        }
+        else {
+            this._gameState = GameState.GAME_ENDED;
+            btn_nueva_partida.className = boton_activado;
+        }
 
     }
 
@@ -317,12 +323,19 @@ class Ruleta {
 
     }
 
+    public ruleta_por_defecto() {
+        premios_ruleta.innerHTML = "";
+        premios_ruleta.className = "";
+        marcador_ruleta.innerHTML = "00"
+        marcador_ruleta.className = fondo_verde;
+    }
+
 } // END RULETA
 
 function apostar(numApuesta) {
 
     if (ruleta.gameState == GameState.BETTING && comprobar_apuesta(numApuesta)) {
-        //Por hacer: primero que nada, hay que comprobar que el jugador tiene suficiente saldo para confrontar la apuesta
+        
         ruleta.jugador.agregar_apuesta(numApuesta, +ficha.value);
 
         if (ruleta.jugador.apuestas.length > 0) {
@@ -360,6 +373,14 @@ function borrar_apuestas() {
         btn_borrar_apuestas.className = boton_desactivado;
         btn_nueva_partida.className = boton_desactivado;
     }
+    else if (GameState.FINISHED) {
+        ruleta.jugador.borrar_apuestas();
+        ruleta.ruleta_por_defecto();
+        btn_girar_ruleta.className = boton_desactivado;
+        btn_borrar_apuestas.className = boton_desactivado;
+        btn_nueva_partida.className = boton_desactivado;
+        ruleta.gameState = GameState.BETTING;
+    }
 
 }
 
@@ -368,6 +389,7 @@ function nueva_partida() {
 
     if (ruleta.gameState == GameState.GAME_ENDED) {
         ruleta.nueva_partida();
+        ruleta.ruleta_por_defecto();
     }
 
 }

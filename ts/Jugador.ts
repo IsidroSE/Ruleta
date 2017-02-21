@@ -87,10 +87,7 @@ class Jugador {
             }
 
             //Al finalizar, borraremos las apuestas mostradas y volveremos a mostrar todas las apuestas
-            apuestas_mostradas.innerHTML = "";
-            for (let apuesta of this._apuestas) {
-                apuesta.mostrar_apuesta();
-            }
+            this.mostrar_apuestas();
 
             //Y sumaremos la apuesta realizada a la cantidad ya apostada
             this._apuesta_total += cantidad_apostada;
@@ -98,6 +95,13 @@ class Jugador {
 
         }
 
+    }
+
+    public mostrar_apuestas() {
+        apuestas_mostradas.innerHTML = "";
+        for (let apuesta of this._apuestas) {
+            apuesta.mostrar_apuesta();
+        }   
     }
 
     //Borra todas las apuestas del vector de apuestas y de la pantalla, también pone a 0 el marcador de la apuesta total

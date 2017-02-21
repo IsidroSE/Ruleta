@@ -225,14 +225,17 @@ var Jugador = (function () {
                 this._apuestas.push(apuesta);
             }
             //Al finalizar, borraremos las apuestas mostradas y volveremos a mostrar todas las apuestas
-            apuestas_mostradas.innerHTML = "";
-            for (var _b = 0, _c = this._apuestas; _b < _c.length; _b++) {
-                var apuesta = _c[_b];
-                apuesta.mostrar_apuesta();
-            }
+            this.mostrar_apuestas();
             //Y sumaremos la apuesta realizada a la cantidad ya apostada
             this._apuesta_total += cantidad_apostada;
             this.actualizar_apuesta_total();
+        }
+    };
+    Jugador.prototype.mostrar_apuestas = function () {
+        apuestas_mostradas.innerHTML = "";
+        for (var _i = 0, _a = this._apuestas; _i < _a.length; _i++) {
+            var apuesta = _a[_i];
+            apuesta.mostrar_apuesta();
         }
     };
     //Borra todas las apuestas del vector de apuestas y de la pantalla, también pone a 0 el marcador de la apuesta total
@@ -249,9 +252,9 @@ var GameState;
 (function (GameState) {
     //Apostando
     GameState[GameState["BETTING"] = 0] = "BETTING";
-    //Girando la ruleta
+    //Girando la ruleta, calculando y repartiendo las recompensas
     GameState[GameState["SPINNING"] = 1] = "SPINNING";
-    //Cuando la ruleta ha acabado de girar, aquí se calcularán las recompensas
+    //Al acabar de girar la ruleta, si el jugador tiene suficiente dinero para seguir apostando
     GameState[GameState["FINISHED"] = 2] = "FINISHED";
     //Fin del juego: cuando el jugador se queda sin dinero
     GameState[GameState["GAME_ENDED"] = 3] = "GAME_ENDED";
@@ -286,10 +289,6 @@ var apuestas_mostradas = document.getElementById("apuestas_mostradas");
 var negro = "negro";
 var rojo = "rojo";
 var verde = "verde";
-//Números que contiene cada columna
-var P12 = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34];
-var M12 = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35];
-var D12 = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36];
 var Ruleta = (function () {
     function Ruleta() {
         this.nueva_partida();
@@ -336,14 +335,13 @@ var Ruleta = (function () {
             marcador_ruleta.className = fondo_negro;
         else
             marcador_ruleta.className = fondo_rojo;
-        if (iteraciones > 0)
+        if (iteraciones >= 0)
             setTimeout(function () { return _this.girar(--iteraciones); }, 200);
         else
             this.revisar_apuestas(alea);
     };
     //Dado el número premiado, comprueba si el jugador ha ganado algún premio
     Ruleta.prototype.revisar_apuestas = function (numero_premiado) {
-        this._gameState = GameState.FINISHED;
         var premio = "";
         var total_ganado = 0;
         for (var _i = 0, _a = this._jugador.apuestas; _i < _a.length; _i++) {
@@ -379,15 +377,15 @@ var Ruleta = (function () {
                         break;
                     // ---------------------------------------------------<----- cambiar esto!!!
                     case tipo_apuestas.P12:
-                        if (P12.indexOf(numero_premiado) > -1)
+                        if (numero_premiado >= 1 && numero_premiado <= 12)
                             premio = DOCENA;
                         break;
                     case tipo_apuestas.M12:
-                        if (M12.indexOf(numero_premiado) > -1)
+                        if (numero_premiado >= 13 && numero_premiado <= 24)
                             premio = DOCENA;
                         break;
                     case tipo_apuestas.D12:
-                        if (D12.indexOf(numero_premiado) > -1)
+                        if (numero_premiado >= 25 && numero_premiado <= 36)
                             premio = DOCENA;
                         break;
                 }
@@ -414,15 +412,18 @@ var Ruleta = (function () {
         else {
             cantidad_ganada = apuesta.cantidad_apostada * 35;
         }
+        cantidad_ganada += apuesta.cantidad_apostada;
         this._jugador.apuesta_total -= apuesta.cantidad_apostada;
         this._jugador.ganancia += cantidad_ganada;
+        apuesta.resultado_apuesta = "Has ganado: " + cantidad_ganada + "€";
         return cantidad_ganada;
     };
     //Perder la apuesta
     Ruleta.prototype.perder_apuesta = function (apuesta) {
         var cantidad_perdida = apuesta.cantidad_apostada;
-        this._jugador.apuesta_total -= apuesta.cantidad_apostada;
+        this._jugador.apuesta_total -= cantidad_perdida;
         this._jugador.ganancia -= cantidad_perdida;
+        apuesta.resultado_apuesta = "Has perdido: " + cantidad_perdida + "€";
         return cantidad_perdida;
     };
     //Aplicar los resultados de la ruleta al jugador
@@ -435,16 +436,24 @@ var Ruleta = (function () {
             clase_fondo = premios_ruleta_ganar;
         }
         else {
+            //Nota: Math.abs() pasa el número negativo a positivo
             mensaje_ruleta = "HAS PERDIDO " + (Math.abs(total_ganado)) + "€.";
             clase_fondo = premios_ruleta_perder;
         }
+        //Mostrar resultados de las apuestas
         this._jugador.mostrar_datos_jugador();
         premios_ruleta.innerHTML = mensaje_ruleta;
         premios_ruleta.className = clase_fondo;
-        /*Cosas por hacer:
-            1. Intentar que debajo de cada apuesta muestre lo que has ganado o perdido. (creo que el metodo de
-            mostrar está hecho, intentar ahora cambiar la variable this._resultado_apuesta en los metodos de arriba).
-            2. Prevenir derrota del jugador y activar/desactivar los botones pertinentes.*/
+        this._jugador.mostrar_apuestas();
+        btn_girar_ruleta.className = boton_desactivado;
+        if (this._jugador.credito > 0) {
+            this._gameState = GameState.FINISHED;
+            btn_borrar_apuestas.className = boton_activado;
+        }
+        else {
+            this._gameState = GameState.GAME_ENDED;
+            btn_nueva_partida.className = boton_activado;
+        }
     };
     //Dado un número, obtiene su color en la ruleta
     Ruleta.prototype.obtener_color = function (numero) {
@@ -502,11 +511,16 @@ var Ruleta = (function () {
         }
         return _esPar;
     };
+    Ruleta.prototype.ruleta_por_defecto = function () {
+        premios_ruleta.innerHTML = "";
+        premios_ruleta.className = "";
+        marcador_ruleta.innerHTML = "00";
+        marcador_ruleta.className = fondo_verde;
+    };
     return Ruleta;
 }()); // END RULETA
 function apostar(numApuesta) {
     if (ruleta.gameState == GameState.BETTING && comprobar_apuesta(numApuesta)) {
-        //Por hacer: primero que nada, hay que comprobar que el jugador tiene suficiente saldo para confrontar la apuesta
         ruleta.jugador.agregar_apuesta(numApuesta, +ficha.value);
         if (ruleta.jugador.apuestas.length > 0) {
             btn_girar_ruleta.className = boton_activado;
@@ -534,11 +548,20 @@ function borrar_apuestas() {
         btn_borrar_apuestas.className = boton_desactivado;
         btn_nueva_partida.className = boton_desactivado;
     }
+    else if (GameState.FINISHED) {
+        ruleta.jugador.borrar_apuestas();
+        ruleta.ruleta_por_defecto();
+        btn_girar_ruleta.className = boton_desactivado;
+        btn_borrar_apuestas.className = boton_desactivado;
+        btn_nueva_partida.className = boton_desactivado;
+        ruleta.gameState = GameState.BETTING;
+    }
 }
 //Crea una nueva partida, reiniciando el dinero del jugador
 function nueva_partida() {
     if (ruleta.gameState == GameState.GAME_ENDED) {
         ruleta.nueva_partida();
+        ruleta.ruleta_por_defecto();
     }
 }
 //Hace girar la ruleta
