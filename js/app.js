@@ -579,3 +579,4 @@ function cambiar_ficha(value) {
     imagen_ficha.src = "img/" + value + ".png";
 }
 var ruleta = new Ruleta();
+//# sourceMappingURL=app.js.map
